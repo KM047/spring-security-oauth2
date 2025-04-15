@@ -42,15 +42,10 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserDTO user) {
+    public ResponseEntity<?> loginUser(@RequestBody UserDTO user) {
 
         try {
-            String token = userService.login(user);
-
-            return new ResponseEntity<>(
-                    token,
-                    HttpStatus.OK
-            );
+            return userService.login(user);
         } catch (Exception e) {
             log.error("Exception occurred while createAuthenticationToken ", e);
             return new ResponseEntity<>("Incorrect username or password", HttpStatus.BAD_REQUEST);
